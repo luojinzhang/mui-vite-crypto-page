@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { coinGeckoApi } from './rtkQuery/coinGeckoApi'
 
 export const store = configureStore({
-    reducer: {},
+    reducer: { [coinGeckoApi.reducerPath]: coinGeckoApi.reducer },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(coinGeckoApi.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
