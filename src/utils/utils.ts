@@ -44,14 +44,14 @@ export const getShortenDateString = (value: string | number) => {
 export const getShortNumberNotation = (value: number) => {
     // Check if the value is greater than or equal to a million
     if (value >= 1000000) {
-        return numeral(value).format("0.00a");  // Format as millions, billions
+        return numeral(value).format("0.00a").toLocaleString();  // Format as millions, billions
     }
 
     // If the value is very small, format it in scientific notation
     if (value < 0.0001) {
-        return numeral(value).format("0.0e+0");
+        return numeral(value).format("0.0e+0").toLocaleString();
     }
 
     // Otherwise, just return the value in normal format
-    return value;
+    return value.toLocaleString();
 };

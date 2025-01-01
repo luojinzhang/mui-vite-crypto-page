@@ -181,7 +181,7 @@ export default function CoinDetailPage() {
                 yAxis={[
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
-                    valueFormatter: (value) => utils.getShortNumberNotation(value).toLocaleString(),
+                    valueFormatter: (value) => utils.getShortNumberNotation(value),
                     domainLimit: "strict",
                   },
                 ]}
@@ -189,7 +189,7 @@ export default function CoinDetailPage() {
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
                     showMark: false,
-                    valueFormatter: (value) => utils.getShortNumberNotation(value!).toLocaleString(),
+                    valueFormatter: (value) => utils.getShortNumberNotation(value!),
                     baseline: "min",
                   },
                 ]}
