@@ -1,6 +1,6 @@
 /**
- * Determine the range of pages to show in the pagination
- * @param page current page
+ * Determine the range of pages to show in the pagination,
+ * @param page current page, 0-based.
  * @param totalPages total pages
  * @returns 
  */
