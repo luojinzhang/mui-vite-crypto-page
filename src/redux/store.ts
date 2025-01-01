@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { coinGeckoApi } from './rtkQuery/coinGeckoApi'
+import coinsClientSlice from './coins/coinsClientSlice'
 
 export const store = configureStore({
-    reducer: { [coinGeckoApi.reducerPath]: coinGeckoApi.reducer },
+    reducer: { 
+        [coinGeckoApi.reducerPath]: coinGeckoApi.reducer, 
+        [coinsClientSlice.name]: coinsClientSlice.reducer,
+    },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(coinGeckoApi.middleware),
 })
 

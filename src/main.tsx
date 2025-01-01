@@ -6,14 +6,20 @@ import theme from "./theme";
 import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { BrowserRouter } from "react-router-dom";
+import { PaginationProvider } from "./components";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <PaginationProvider>
+            <App />
+          </PaginationProvider>
+        </Provider>
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
 );
