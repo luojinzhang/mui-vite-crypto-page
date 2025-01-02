@@ -23,7 +23,7 @@ export default function ApplicationWrapper({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
       <Provider store={store}>
         <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <PaginationProvider>
