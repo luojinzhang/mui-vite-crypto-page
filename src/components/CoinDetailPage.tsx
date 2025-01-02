@@ -18,7 +18,7 @@ export default function CoinDetailPage() {
 
   // Selected chart: prices/market_caps/total_volumes
   const [selectedMetric, setSelectedMetric] = React.useState<keyof CryptoModel.CoinHistoricalChart>("prices");
-  
+
   // Selected time range: 24h/1m/3m/1y
   const [selectedTimeRange, setSelectedTimeRange] = React.useState<CoinGeckoApiRequest.GetCoinHistoricalChartDataByIdRequest["days"]>("30");
 
@@ -173,7 +173,7 @@ export default function CoinDetailPage() {
                 xAxis={[
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[0]),
-                    valueFormatter: (value) => utils.getShortenDateString(value),
+                    valueFormatter: (value) => (selectedTimeRange === "1" ? utils.getShortenTime(value) : utils.getShortenDateString(value)), // When time range is 1d, display time instead of date.
                     min: coinHistoricalChart[selectedMetric].length > 0 ? coinHistoricalChart[selectedMetric][0][0] : undefined,
                     max: coinHistoricalChart[selectedMetric].length > 0 ? coinHistoricalChart[selectedMetric][coinHistoricalChart[selectedMetric].length - 1][0] : undefined,
                   },
