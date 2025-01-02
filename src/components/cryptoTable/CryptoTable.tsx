@@ -67,32 +67,40 @@ export default function CryptoTable() {
         <TableBody>
           {coins.map((coin) => (
             <SelectableTableRow key={coin.id} onClick={handleRowClick(coin.id)}>
+              {/* Name */}
               <ConsistentHeightTableCell style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
                 <Avatar src={coin.image} alt={coin.name} sx={{ width: `1.5rem`, height: `1.5rem`, mr: "0.5rem" }} />
                 {coin.name}
               </ConsistentHeightTableCell>
-              <ConsistentHeightTableCell align="right">{coin.current_price !== null ? `$${coin.current_price}` : "-"}</ConsistentHeightTableCell>
 
+              {/* Price */}
+              <ConsistentHeightTableCell align="right">{coin.current_price !== null ? `$${coin.current_price.toLocaleString()}` : "-"}</ConsistentHeightTableCell>
+
+              {/* 1H */}
               {(coin.price_change_percentage_1h_in_currency !== null && (
                 <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_1h_in_currency < 0 ? "red" : "green" }}>
                   {coin.price_change_percentage_1h_in_currency.toFixed(2)}%
                 </ConsistentHeightTableCell>
               )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
 
+              {/* 24H */}
               {(coin.price_change_percentage_24h_in_currency !== null && (
                 <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_24h_in_currency < 0 ? "red" : "green" }}>
                   {coin.price_change_percentage_24h_in_currency.toFixed(2)}%
                 </ConsistentHeightTableCell>
               )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
 
+              {/* 7D */}
               {(coin.price_change_percentage_7d_in_currency !== null && (
                 <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_7d_in_currency < 0 ? "red" : "green" }}>
                   {coin.price_change_percentage_7d_in_currency.toFixed(2)}%
                 </ConsistentHeightTableCell>
               )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
 
-              <ConsistentHeightTableCell align="right">{coin.market_cap !== null ? `$${coin.market_cap?.toLocaleString()}` : "-"}</ConsistentHeightTableCell>
+              {/* Market cap */}
+              <ConsistentHeightTableCell align="right">{coin.market_cap !== null ? `$${coin.market_cap.toLocaleString()}` : "-"}</ConsistentHeightTableCell>
 
+              {/* Sparkline chart */}
               <ConsistentHeightTableCell align="center" padding="checkbox">
                 <Box sx={{ width: "10rem", height: "100%", p: 0 }}>
                   <SparkLineChart
