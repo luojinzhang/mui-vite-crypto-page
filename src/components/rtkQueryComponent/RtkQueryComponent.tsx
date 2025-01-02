@@ -2,15 +2,14 @@ import React from "react";
 import { useGetCoinsListQuery, useLazyGetCoinsListWithMarketDataQuery } from "../../redux/rtkQuery/coinGeckoApi";
 import { useDispatch } from "react-redux";
 import { coinsClientSliceActions } from "../../redux/coins/coinsClientSlice";
-import { Box, CircularProgress } from "@mui/material";
-import { usePagination } from "..";
+import { useLoading, usePagination } from "..";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { utils } from "../../utils";
 
 export default function RtkQueryComponent() {
   const { currentPage, rowsPerPage, setTotalPages } = usePagination();
-
+  const { setIsLoading } = useLoading();
   const { data: coinsListMapData, isLoading: isLoadingCoinsListMap } = useGetCoinsListQuery();
 
   const [fetchCoinsListWithMarketData] = useLazyGetCoinsListWithMarketDataQuery();
@@ -64,25 +63,9 @@ export default function RtkQueryComponent() {
     });
   }, [currentPage, rowsPerPage]);
 
-  return (
-    (isLoading && (
-      <Box
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "black",
-          opacity: "70%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    )) ||
-    null
-  );
+  React.useEffect(() => {
+    setIsLoading(isLoading);
+  }, [isLoading]);
+
+  return null;
 }

@@ -203,4 +203,9 @@ namespace CryptoModel {
     market_caps: [number, number][];
     total_volumes: [number, number][];
   }
+
+  export interface LoadingContext {
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  }
 }
