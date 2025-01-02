@@ -35,6 +35,15 @@ describe("getPageNumbers functionality test", () => {
     const expectedPages = [5, 6, 7, 8];
     expect(pages).toEqual(expectedPages);
   });
+
+  it("should return empty when total pages equal or less than 0", async () => {
+    const pages1 = utils.getPageNumbers(5, 0);
+    const pages2 = utils.getPageNumbers(5, -4);
+    const expectedPages: number[] = [];
+
+    expect(pages1).toEqual(expectedPages);
+    expect(pages2).toEqual(expectedPages);
+  });
 });
 
 describe("getShortenDateString functionality test", () => {

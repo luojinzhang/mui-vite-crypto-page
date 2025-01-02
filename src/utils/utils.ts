@@ -8,6 +8,10 @@ import { toast, ToastOptions } from "react-toastify";
  * @returns
  */
 export const getPageNumbers = (page: number, totalPages: number): number[] => {
+  if (totalPages < 1) {
+    return [];
+  }
+
   const pageNumbers = [];
 
   // Show pages near the current page
