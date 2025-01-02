@@ -170,19 +170,19 @@ export default function CoinDetailPage() {
 
             <Box sx={{ width: "100%", height: "30rem", marginTop: "1rem", p: "0" }}>
               <LineChart
+                sx={{ p: "1rem" }}
                 xAxis={[
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[0]),
                     valueFormatter: (value) => (selectedTimeRange === "1" ? utils.getShortenTime(value) : utils.getShortenDateString(value)), // When time range is 1d, display time instead of date.
-                    min: coinHistoricalChart[selectedMetric].length > 0 ? coinHistoricalChart[selectedMetric][0][0] : undefined,
-                    max: coinHistoricalChart[selectedMetric].length > 0 ? coinHistoricalChart[selectedMetric][coinHistoricalChart[selectedMetric].length - 1][0] : undefined,
+                    domainLimit: "strict",
                   },
                 ]}
                 yAxis={[
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
                     valueFormatter: (value) => utils.getShortNumberNotation(value),
-                    domainLimit: "strict",
+                    domainLimit: "nice",
                   },
                 ]}
                 series={[
