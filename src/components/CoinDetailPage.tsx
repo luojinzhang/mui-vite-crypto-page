@@ -6,9 +6,10 @@ import { LineChart } from "@mui/x-charts";
 import { utils } from "../utils";
 
 export default function CoinDetailPage() {
-  const { coinId } = useParams<{ coinId: string }>();
-  const [fetchCoinDataById, { isFetching: isFetchingCoinData }] = useLazyGetCoinDataByIdQuery();
-  const [fetchCoinChartById, { isFetching: isFetchingCoinChart }] = useLazyGetCoinHistoricalChartDataByIdQuery();
+  const { coinId } = useParams<{ coinId: string }>(); // Route param
+  const isFetching = React.useRef(false); // Use to ensure only 1 fetch at a time due to api limitation.
+  const [fetchCoinDataById] = useLazyGetCoinDataByIdQuery();
+  const [fetchCoinChartById] = useLazyGetCoinHistoricalChartDataByIdQuery();
   const [coinData, setCoinData] = React.useState<CryptoModel.Coin | null>(null);
   const [coinHistoricalChart, setCoinHistoricalChart] = React.useState<CryptoModel.CoinHistoricalChart>({
     market_caps: [],
@@ -36,10 +37,13 @@ export default function CoinDetailPage() {
 
   // Fetch coin data by id
   React.useEffect(() => {
-    if (coinId && !isFetchingCoinData) {
+    if (coinId && !isFetching.current) {
+      isFetching.current = true;
       fetchCoinDataById({ id: coinId, community_data: false, developer_data: false, localization: false, market_data: true, sparkline: false, tickers: false }).then((response) => {
-        if (response.error) {
+        isFetching.current = false;
+        if (response.error && "status" in response.error) {
           console.error(response.error);
+          utils.notify(`Fetch coin data error: ${response.error.status}`, "error");
           return;
         }
 
@@ -53,10 +57,13 @@ export default function CoinDetailPage() {
   // API Limitation, wait for the last api to be finished before calling another.
   // Fetch coin historical chart data by id
   React.useEffect(() => {
-    if (coinData && !isFetchingCoinChart) {
+    if (coinData && !isFetching.current) {
+      isFetching.current = true;
       fetchCoinChartById({ id: coinData.id, vs_currency: "usd", days: selectedTimeRange }).then((response) => {
-        if (response.error) {
+        isFetching.current = false;
+        if (response.error && "status" in response.error) {
           console.error(response.error);
+          utils.notify(`Fetch coin chart data error: ${response.error.status}`, "error");
           return;
         }
 

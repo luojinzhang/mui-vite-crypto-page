@@ -78,7 +78,7 @@ export const getShortNumberNotation = (value: number) => {
 };
 
 /**
- * Show notification over application
+ * Encapsulated react-toastify's toast to show notification over application
  * @param content 
  * @param type 
  * @returns 
