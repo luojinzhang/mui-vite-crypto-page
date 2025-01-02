@@ -36,3 +36,46 @@ describe("getPageNumbers functionality test", () => {
         expect(pages).toEqual(expectedPages);
     });
 })
+
+describe("getShortenDateString functionality test", () => {
+    it("should return correct shorten date in `dd mmm`", async () => {
+        const time = new Date("2024-12-17T03:24:00");
+        const expectedDate = "17 Dec";
+        const timestamp = time.getTime();
+        const actualDate = utils.getShortenDateString(timestamp)
+        expect(actualDate).toEqual(expectedDate);
+    });
+})
+
+describe("getShortenTime functionality test", () => {
+    it("should return correct shorten time format in hh:mm", async () => {
+        const time = new Date("2024-12-17T03:24:00");
+        const expectedDate = "03:24";
+        const timestamp = time.getTime();
+        const actualDate = utils.getShortenTime(timestamp)
+        expect(actualDate).toEqual(expectedDate);
+    });
+})
+
+describe("getShortNumberNotation functionality test", () => {
+    it("should return correct shorten number with notation for very big number", async () => {
+        const bigNum = 1200000;
+        const expectedResult = "1.20m";
+        const actualResult = utils.getShortNumberNotation(bigNum)
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("should return correct shorten number with notation for very small number", async () => {
+        const smallNum = 0.00000016;
+        const expectedResult = "1.6e-7";
+        const actualResult = utils.getShortNumberNotation(smallNum)
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("should return same (formatted) number for a normal length number", async () => {
+        const normal = 12300;
+        const expectedResult = "12,300";
+        const actualResult = utils.getShortNumberNotation(normal)
+        expect(actualResult).toEqual(expectedResult);
+    });
+})

@@ -6,7 +6,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { usePagination } from "..";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-
+import { utils } from "../../utils";
 
 export default function RtkQueryComponent() {
   const { currentPage, rowsPerPage, setTotalPages } = usePagination();
@@ -50,23 +50,18 @@ export default function RtkQueryComponent() {
       order: "market_cap_desc",
       price_change_percentage: "1h,24h,7d",
       sparkline: true,
-    })
-      .then((response) => {
-        isFetching.current = false;
-        if (response.error) {
-          console.error("Error:", response.error);
-          alert(`${JSON.stringify(response.error)}`);
-          return;
-        }
+    }).then((response) => {
+      isFetching.current = false;
+      if (response.error && "status" in response.error) {
+        console.error(response.error);
+        utils.notify(`Fetch coin data error: ${response.error.status}`, "error");
+        return;
+      }
 
-        if (response.data) {
-          dispatch(setCoinsListMarket(response.data));
-        }
-      })
-      .catch((e) => {
-        isFetching.current = false;
-        console.error(e);
-      });
+      if (response.data) {
+        dispatch(setCoinsListMarket(response.data));
+      }
+    });
   }, [currentPage, rowsPerPage]);
 
   return (

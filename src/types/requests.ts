@@ -16,4 +16,22 @@ namespace CoinGeckoApiRequest {
         locale?: string;
         precision?: string;
     }
+
+    export type GetCoinDataByIdRequest = {
+        id: string;
+        localization?: boolean;
+        tickers?: boolean;
+        market_data?: boolean;
+        community_data?: boolean;
+        developer_data?: boolean;
+        sparkline?: boolean;
+    }
+
+    export type GetCoinHistoricalChartDataByIdRequest = {
+        id: string;
+        vs_currency: string;
+        days: '1' | '30' | '90' | '365'; // Maximum 365 for free plan.
+        interval?: string;
+        precision?: string;
+    }
 }

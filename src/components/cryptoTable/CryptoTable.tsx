@@ -5,12 +5,21 @@ import { RootState } from "../../redux/store";
 import CustomTablePaginationActionComponent from "./CustomTablePaginationActionComponent";
 import { SparkLineChart } from "@mui/x-charts";
 import { usePagination } from "..";
+import { useNavigate } from "react-router-dom";
 
 const ConsistentHeightTableCell = styled(TableCell)(({}) => ({
   height: "5rem",
 }));
 
+const SelectableTableRow = styled(TableRow)(({}) => ({
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#f4f4f4",
+  },
+}));
+
 export default function CryptoTable() {
+  const navigate = useNavigate();
   const { currentPage, rowsPerPage, setCurrentPage, setRowsPerPage } = usePagination();
 
   const totalCoins = useSelector((state: RootState) => state.coinsClientSlice.coinsIdMap.length);
@@ -26,6 +35,11 @@ export default function CryptoTable() {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     startTransition(() => setRowsPerPage(parseInt(event.target.value, 10)));
     setCurrentPage(1); // Reset to first page (1-based)
+  };
+
+  // Handle row click event
+  const handleRowClick = (coinId: string) => () => {
+    navigate(`/coins/${coinId}`); // Navigate to the coin's detail page
   };
 
   // Scroll to top when currentPage or rowsPerPage changes
@@ -52,7 +66,7 @@ export default function CryptoTable() {
 
         <TableBody>
           {coins.map((coin) => (
-            <TableRow key={coin.id}>
+            <SelectableTableRow key={coin.id} onClick={handleRowClick(coin.id)}>
               <ConsistentHeightTableCell style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
                 <Avatar src={coin.image} alt={coin.name} sx={{ width: `1.5rem`, height: `1.5rem`, mr: "0.5rem" }} />
                 {coin.name}
@@ -90,7 +104,7 @@ export default function CryptoTable() {
                   ></SparkLineChart>
                 </Box>
               </ConsistentHeightTableCell>
-            </TableRow>
+            </SelectableTableRow>
           ))}
         </TableBody>
       </Table>
