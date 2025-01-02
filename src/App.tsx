@@ -1,10 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import { RtkQueryComponent, CoinListPage, CoinDetailPage } from "./components/";
+import { RtkQueryComponent, CoinListPage, CoinDetailPage, NavigationBar } from "./components/";
 import { Slide, ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
     <div className="App">
+      {/* Header */}
+      <NavigationBar />
+
       {/* App's routes */}
       <Routes>
         <Route path="/" element={<CoinListPage />} />
