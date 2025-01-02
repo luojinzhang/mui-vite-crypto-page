@@ -47,6 +47,16 @@ describe("getShortenDateString functionality test", () => {
     });
 })
 
+describe("getShortenTime functionality test", () => {
+    it("should return correct shorten time format in hh:mm", async () => {
+        const time = new Date("2024-12-17T03:24:00");
+        const expectedDate = "03:24";
+        const timestamp = time.getTime();
+        const actualDate = utils.getShortenTime(timestamp)
+        expect(actualDate).toEqual(expectedDate);
+    });
+})
+
 describe("getShortNumberNotation functionality test", () => {
     it("should return correct shorten number with notation for very big number", async () => {
         const bigNum = 1200000;

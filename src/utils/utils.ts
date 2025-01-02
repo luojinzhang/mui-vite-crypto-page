@@ -31,16 +31,36 @@ export const getPageNumbers = (page: number, totalPages: number): number[] => {
     return Array.from(new Set(pageNumbers)).sort((a, b) => a - b);
 };
 
-export const getShortenDateString = (value: string | number) => {
+/**
+ * Return shorten date string
+ * @param value 
+ * @returns 
+ */
+export const getShortenDateString = (value: number) => {
     const date = new Date(value);
 
-    // Extract day and month, and format the string as "dd mmm"
+    // Extract day and month, and format the string as "DD MMM"
     const day = date.getDate();
     const month = date.toLocaleString("default", { month: "short" });
 
     return `${day} ${month}`;
 }
 
+/**
+ * Return hh:mm
+ * @param value 
+ * @returns 
+ */
+export const getShortenTime = (value: number) => {
+    const date = (new Date(value));
+    return date.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+
+/**
+ * Return shorten number notation formatted string.
+ * @param value 
+ * @returns 
+ */
 export const getShortNumberNotation = (value: number) => {
     // Check if the value is greater than or equal to a million
     if (value >= 1000000) {
