@@ -4,8 +4,10 @@ import { useLazyGetCoinDataByIdQuery, useLazyGetCoinHistoricalChartDataByIdQuery
 import { Avatar, Box, Grid2, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 import { utils } from "../utils";
+import { useLoading } from ".";
 
 export default function CoinDetailPage() {
+  const { setIsLoading } = useLoading();
   const { coinId } = useParams<{ coinId: string }>(); // Route param
   const isFetching = React.useRef(false); // Use to ensure only 1 fetch at a time due to api limitation.
   const [fetchCoinDataById] = useLazyGetCoinDataByIdQuery();
@@ -73,6 +75,10 @@ export default function CoinDetailPage() {
       });
     }
   }, [coinData, selectedTimeRange]);
+
+  React.useEffect(() => {
+    setIsLoading(isFetching.current);
+  }, [isFetching.current]);
 
   return (
     (coinData && (
