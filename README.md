@@ -2,7 +2,7 @@
 
 ## Usage
 
-### Developer
+### Development
 
 Installation:
 
@@ -20,4 +20,10 @@ Run unit tests
 
 ```bash
 yarn test
+```
+
+### Release
+
+```bash
+yarn build
 ```
