@@ -7,11 +7,11 @@ import { SparkLineChart } from "@mui/x-charts";
 import { usePagination } from "..";
 import { useNavigate } from "react-router-dom";
 
-const ConsistentHeightTableCell = styled(TableCell)(({}) => ({
+const ConsistentHeightTableCell = styled(TableCell)(() => ({
   height: "5rem",
 }));
 
-const SelectableTableRow = styled(TableRow)(({}) => ({
+const SelectableTableRow = styled(TableRow)(() => ({
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#f4f4f4",

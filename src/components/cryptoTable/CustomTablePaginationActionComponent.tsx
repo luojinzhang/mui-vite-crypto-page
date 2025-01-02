@@ -1,10 +1,9 @@
-import { Box, Button, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { TablePaginationActionsProps } from "@mui/material/TablePagination/TablePaginationActions";
 import React from "react";
 import { utils } from "../../utils";
 
 export default function TablePaginationActions(props: TablePaginationActionsProps) {
-  const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
   // Calculate the total number of pages

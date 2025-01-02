@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { RtkQueryComponent, CoinListPage, CoinDetailPage } from "./components/";
-import { Bounce, Slide, ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
