@@ -1,4 +1,5 @@
 import numeral from "numeral";
+import { toast, ToastOptions } from "react-toastify";
 
 /**
  * Determine the range of pages to show in the pagination,
@@ -75,3 +76,13 @@ export const getShortNumberNotation = (value: number) => {
     // Otherwise, just return the value in normal format
     return value.toLocaleString();
 };
+
+/**
+ * Show notification over application
+ * @param content 
+ * @param type 
+ * @returns 
+ */
+export const notify = (content: string, type: ToastOptions["type"]) => {
+    return toast<string>(content, { type })
+}
