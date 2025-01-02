@@ -5,3 +5,4 @@ export { default as CoinListPage } from "./CoinListPage";
 export { default as CoinDetailPage } from "./CoinDetailPage";
 export { default as NavigationBar } from "./navigationBar/NavigationBar";
 export { default as ApplicationWrapper, useLoading } from "./hoc/ApplicationWrapper";
+export { default as CoinInfo } from "./coinDetail/coinInfo/CoinInfo";
