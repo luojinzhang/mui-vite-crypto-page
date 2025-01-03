@@ -9,7 +9,7 @@ interface SearchResultsProps {
   resetQuery: () => void;
 }
 
-export default function SearchResults({ query, resetQuery }: SearchResultsProps) {
+function SearchResults({ query, resetQuery }: SearchResultsProps) {
   const coinsIdMap = useSelector((state: RootState) => state.coinsClientSlice.coinsIdMap);
   const navigate = useNavigate();
 
@@ -38,3 +38,5 @@ export default function SearchResults({ query, resetQuery }: SearchResultsProps)
     </Button>
   ));
 }
+
+export default React.memo(SearchResults);
