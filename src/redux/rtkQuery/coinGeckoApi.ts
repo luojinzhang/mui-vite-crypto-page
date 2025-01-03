@@ -10,7 +10,7 @@ export const coinGeckoApi = createApi({
     baseUrl: COIN_GECKO_API_BASE_URL,
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
-      headers.set("x_cg_demo_api_key", API_KEY);
+      headers.set("x-cg-demo-api-key", API_KEY);
       return headers;
     },
   }),
