@@ -1,22 +1,13 @@
-import { Avatar, Box, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableContainer, TablePagination } from "@mui/material";
 import React, { startTransition } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import CustomTablePaginationActionComponent from "./CustomTablePaginationActionComponent";
-import { SparkLineChart } from "@mui/x-charts";
 import { usePagination } from "..";
 import { useNavigate } from "react-router-dom";
-
-const ConsistentHeightTableCell = styled(TableCell)(() => ({
-  height: "5rem",
-}));
-
-const SelectableTableRow = styled(TableRow)(() => ({
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#f4f4f4",
-  },
-}));
+import { utils } from "../../utils";
+import TableHeader from "./TableHeader";
+import TableRowComponent from "./TableRow";
 
 export default function CryptoTable() {
   const navigate = useNavigate();
@@ -24,6 +15,10 @@ export default function CryptoTable() {
 
   const totalCoins = useSelector((state: RootState) => state.coinsClientSlice.coinsIdMap.length);
   const coins = useSelector((state: RootState) => state.coinsClientSlice.coinsListMarket);
+
+  // Sorting state
+  const [order, setOrder] = React.useState<"asc" | "desc">("asc");
+  const [orderBy, setOrderBy] = React.useState<keyof CryptoModel.CryptoCoinMarket>("market_cap_rank");
 
   // Handle page change for pagination,
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
@@ -42,81 +37,33 @@ export default function CryptoTable() {
     navigate(`/coins/${coinId}`); // Navigate to the coin's detail page
   };
 
+  // Sorting function
+  const handleRequestSort = (property: keyof CryptoModel.CryptoCoinMarket) => () => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
   // Scroll to top when currentPage or rowsPerPage changes
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage, rowsPerPage]);
 
-  React.useEffect(() => {}, []);
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: "40rem" }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">1h</TableCell>
-            <TableCell align="right">24h</TableCell>
-            <TableCell align="right">7d</TableCell>
-            <TableCell align="right">Market Cap</TableCell>
-            <TableCell align="right">Last 7 Days </TableCell>
-          </TableRow>
-        </TableHead>
+        {/* Header */}
+        <TableHeader onRequestSort={handleRequestSort} order={order} orderBy={orderBy} />
 
+        {/* Body */}
         <TableBody>
-          {coins.map((coin) => (
-            <SelectableTableRow key={coin.id} onClick={handleRowClick(coin.id)}>
-              {/* Name */}
-              <ConsistentHeightTableCell style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
-                <Avatar src={coin.image} alt={coin.name} sx={{ width: `1.5rem`, height: `1.5rem`, mr: "0.5rem" }} />
-                {coin.name}
-              </ConsistentHeightTableCell>
-
-              {/* Price */}
-              <ConsistentHeightTableCell align="right">{coin.current_price !== null ? `$${coin.current_price.toLocaleString()}` : "-"}</ConsistentHeightTableCell>
-
-              {/* 1H */}
-              {(coin.price_change_percentage_1h_in_currency !== null && (
-                <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_1h_in_currency < 0 ? "red" : "green" }}>
-                  {coin.price_change_percentage_1h_in_currency.toFixed(2)}%
-                </ConsistentHeightTableCell>
-              )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
-
-              {/* 24H */}
-              {(coin.price_change_percentage_24h_in_currency !== null && (
-                <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_24h_in_currency < 0 ? "red" : "green" }}>
-                  {coin.price_change_percentage_24h_in_currency.toFixed(2)}%
-                </ConsistentHeightTableCell>
-              )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
-
-              {/* 7D */}
-              {(coin.price_change_percentage_7d_in_currency !== null && (
-                <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_7d_in_currency < 0 ? "red" : "green" }}>
-                  {coin.price_change_percentage_7d_in_currency.toFixed(2)}%
-                </ConsistentHeightTableCell>
-              )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
-
-              {/* Market cap */}
-              <ConsistentHeightTableCell align="right">{coin.market_cap !== null ? `$${coin.market_cap.toLocaleString()}` : "-"}</ConsistentHeightTableCell>
-
-              {/* Sparkline chart */}
-              <ConsistentHeightTableCell align="center" padding="checkbox">
-                <Box sx={{ width: "10rem", height: "100%", p: 0 }}>
-                  <SparkLineChart
-                    sx={{ width: "100%" }}
-                    plotType="line"
-                    data={coin.sparkline_in_7d.price}
-                    colors={coin.price_change_percentage_7d_in_currency && coin.price_change_percentage_7d_in_currency < 0 ? ["red"] : ["green"]}
-                    skipAnimation
-                  ></SparkLineChart>
-                </Box>
-              </ConsistentHeightTableCell>
-            </SelectableTableRow>
+          {utils.sortCoins(coins, orderBy, order).map((coin) => (
+            <TableRowComponent key={coin.id} coin={coin} onRowClick={handleRowClick} />
           ))}
         </TableBody>
       </Table>
 
+      {/* Pagination */}
       <TablePagination
         component="div"
         rowsPerPageOptions={[50, 100, 250]}

@@ -6,6 +6,7 @@ import { LineChart } from "@mui/x-charts";
 import { utils } from "../utils";
 import { CoinInfo } from ".";
 import { useLoading } from "../hoc";
+import { formatCurrency } from "@coingecko/cryptoformat";
 
 export default function CoinDetailPage() {
   const { setIsLoading } = useLoading();
@@ -170,7 +171,7 @@ export default function CoinDetailPage() {
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
                     showMark: false,
-                    valueFormatter: (value) => utils.getShortNumberNotation(value!),
+                    valueFormatter: (value) => (value !== null ? formatCurrency(value, "USD", "en", false, { decimalPlaces: 10, significantFigures: 6 }) : value),
                     baseline: "min",
                   },
                 ]}

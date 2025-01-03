@@ -39,14 +39,14 @@ namespace CryptoModel {
     market_cap_change_percentage_24h: number | null;
     circulating_supply: number | null;
     total_supply: number;
-    max_supply: number;
+    max_supply: number | null;
     ath: number | null;
     ath_change_percentage: number;
     ath_date: string | null;
     atl: number | null;
     atl_change_percentage: number;
     atl_date: string | null;
-    roi: number | null;
+    roi: object | null;
     last_updated: string | null;
     sparkline_in_7d: {
       price: number[];

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { utils } from "../utils";
+import { mockedCoins } from "./mock.test";
 
 describe("getPageNumbers functionality test", () => {
   const totalPages = 10;
@@ -87,4 +88,15 @@ describe("getShortNumberNotation functionality test", () => {
     const actualResult = utils.getShortNumberNotation(normal);
     expect(actualResult).toEqual(expectedResult);
   });
+});
+
+describe("sortCoins functionality test", () => {
+  it("should return correct order based on market cap rank in desc", async () => {
+    const actualSorted = utils.sortCoins(mockedCoins, "market_cap_rank", "desc")
+
+    expect(actualSorted[0].market_cap_rank).toEqual(mockedCoins[mockedCoins.length - 1].market_cap_rank);
+  });
+
+  // TODO:
+  // Add more test cases.
 });
