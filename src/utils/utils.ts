@@ -134,3 +134,20 @@ export const sortCoins = (coins: CryptoModel.CryptoCoinMarket[], orderBy: keyof 
 
   return copy.sort(comparator);
 };
+
+/**
+ * Get percentage color (red / green / black) depends on value.
+ * @param value
+ * @returns
+ */
+export const getCryptoPercentageColor = (value: number | undefined | null) => {
+  if (value === null || value === undefined) {
+    return "black";
+  }
+
+  if (value >= 0) {
+    return "green";
+  }
+
+  return "red";
+};
