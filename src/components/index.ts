@@ -4,5 +4,8 @@ export { default as PaginationProvider, usePagination } from "./cryptoContext/Pa
 export { default as CoinListPage } from "./CoinListPage";
 export { default as CoinDetailPage } from "./CoinDetailPage";
 export { default as NavigationBar } from "./navigationBar/NavigationBar";
-export { default as CoinInfo } from "./coinDetail/coinInfo/CoinInfo";
+export { default as CoinDetailInfo } from "./coinDetail/CoinDetailInfo";
 export { default as SearchBar } from "./searchBar/SearchBar";
+export { default as CoinDetailPriceChangeTable } from "./coinDetail/CoinDetailPriceChangeTable";
+export { default as CoinDetailPriceChart } from "./coinDetail/CoinDetailPriceChart";
+export { default as CoinDetailChartControlToggles } from "./coinDetail/CoinDetailChartControlToggles";

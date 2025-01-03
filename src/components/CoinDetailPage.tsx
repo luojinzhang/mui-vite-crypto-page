@@ -1,12 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useLazyGetCoinDataByIdQuery, useLazyGetCoinHistoricalChartDataByIdQuery } from "../redux/rtkQuery/coinGeckoApi";
-import { Avatar, Box, Grid2, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import { LineChart } from "@mui/x-charts";
+import { Avatar, Box, Grid2, Paper, Typography } from "@mui/material";
 import { utils } from "../utils";
-import { CoinInfo } from ".";
+import { CoinDetailPriceChart, CoinDetailInfo, CoinDetailPriceChangeTable, CoinDetailChartControlToggles } from ".";
 import { useLoading } from "../hoc";
-import { formatCurrency } from "@coingecko/cryptoformat";
 
 export default function CoinDetailPage() {
   const { setIsLoading } = useLoading();
@@ -119,65 +117,24 @@ export default function CoinDetailPage() {
 
             {/* Coin info */}
             <Box display="flex" flexDirection="column" gap="0.2rem">
-              <CoinInfo market_data={coinData.market_data} />
+              <CoinDetailInfo market_data={coinData.market_data} />
             </Box>
           </Grid2>
 
           <Grid2 container pt="1rem" width="100%">
-            <Stack
-              gap="1rem"
-              sx={{
-                width: "100%",
-                justifyContent: "space-between",
-                flexDirection: {
-                  xs: "column", // column direction for small screens
-                  sm: "row", // row direction for larger screens
-                },
-                padding: "1rem 1rem 0rem 1rem",
-              }}
-            >
-              <ToggleButtonGroup value={selectedMetric} exclusive onChange={handleChartMetricChange} color="primary">
-                <ToggleButton value="prices">Price</ToggleButton>
-                <ToggleButton value="market_caps">Market Cap</ToggleButton>
-                <ToggleButton value="total_volumes">Volume</ToggleButton>
-              </ToggleButtonGroup>
+            {/* Toggle buttons for chart control */}
+            <CoinDetailChartControlToggles
+              selectedMetric={selectedMetric}
+              selectedTimeRange={selectedTimeRange}
+              onChangeMetric={handleChartMetricChange}
+              onChangeTimeRange={handleChartTimeRangeChange}
+            />
 
-              <ToggleButtonGroup value={selectedTimeRange} exclusive onChange={handleChartTimeRangeChange} color="primary">
-                <ToggleButton value="1">24H</ToggleButton>
-                <ToggleButton value="30">1M</ToggleButton>
-                <ToggleButton value="90">3M</ToggleButton>
-                <ToggleButton value="365">1Y</ToggleButton>
-              </ToggleButtonGroup>
-            </Stack>
+            {/* Price chart */}
+            <CoinDetailPriceChart selectedTimeRange={selectedTimeRange} selectedMetric={selectedMetric} coinHistoricalChart={coinHistoricalChart} />
 
-            <Box sx={{ width: "100%", height: "30rem", marginTop: "1rem", p: "0" }}>
-              <LineChart
-                sx={{ pl: "1rem" }}
-                xAxis={[
-                  {
-                    data: coinHistoricalChart[selectedMetric].map((x) => x[0]),
-                    valueFormatter: (value) => (selectedTimeRange === "1" ? utils.getShortenTime(value) : utils.getShortenDateString(value)), // When time range is 1d, display time instead of date.
-                    domainLimit: "strict",
-                  },
-                ]}
-                yAxis={[
-                  {
-                    data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
-                    valueFormatter: (value) => utils.getShortNumberNotation(value),
-                    domainLimit: "nice",
-                  },
-                ]}
-                series={[
-                  {
-                    data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
-                    showMark: false,
-                    valueFormatter: (value) => (value !== null ? formatCurrency(value, "USD", "en", false, { decimalPlaces: 10, significantFigures: 6 }) : value),
-                    baseline: "min",
-                  },
-                ]}
-                grid={{ horizontal: true }}
-              />
-            </Box>
+            {/* Price change table */}
+            <CoinDetailPriceChangeTable coinData={coinData} />
           </Grid2>
         </Paper>
       </Box>
