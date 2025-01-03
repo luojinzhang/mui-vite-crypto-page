@@ -1,5 +1,6 @@
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, styled } from "@mui/material";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, styled, Paper } from "@mui/material";
 import React from "react";
+import { utils } from "../../utils";
 
 const PriceChangeTableHeaderCell = styled(TableCell)({
   borderRight: "1px solid rgba(0,0,0,0.2)",
@@ -23,7 +24,7 @@ interface CoinDetailPriceChangeTableProps {
 
 export default function CoinDetailPriceChangeTable({ coinData }: CoinDetailPriceChangeTableProps) {
   return (
-    <TableContainer component="div" sx={{ borderRadius: "0.75rem", border: "1px solid rgba(0,0,0,0.2)" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: "0.75rem", border: "1px solid rgba(0,0,0,0.2)" }}>
       <Table sx={{ width: "100%", borderRadius: "1rem", borderCollapse: "collapse" }}>
         <TableHead>
           <TableRow>
@@ -39,61 +40,63 @@ export default function CoinDetailPriceChangeTable({ coinData }: CoinDetailPrice
         </TableHead>
 
         <TableBody>
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              color: coinData?.market_data.price_change_percentage_1h_in_currency.usd && coinData?.market_data.price_change_percentage_1h_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_1h_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_1h_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+          <TableRow>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_1h_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_1h_in_currency.usd ? `${coinData?.market_data.price_change_percentage_1h_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
 
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              color: coinData?.market_data.price_change_percentage_24h_in_currency.usd && coinData?.market_data.price_change_percentage_24h_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_24h_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_24h_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_24h_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_24h_in_currency.usd ? `${coinData?.market_data.price_change_percentage_24h_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
 
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              color: coinData?.market_data.price_change_percentage_7d_in_currency.usd && coinData?.market_data.price_change_percentage_7d_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_7d_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_7d_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_7d_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_7d_in_currency.usd ? `${coinData?.market_data.price_change_percentage_7d_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
 
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              borderRight: "1px solid rgba(0,0,0,0.2)",
-              color: coinData?.market_data.price_change_percentage_14d_in_currency.usd && coinData?.market_data.price_change_percentage_14d_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_14d_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_14d_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                borderRight: "1px solid rgba(0,0,0,0.2)",
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_14d_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_14d_in_currency.usd ? `${coinData?.market_data.price_change_percentage_14d_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
 
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              color: coinData?.market_data.price_change_percentage_30d_in_currency.usd && coinData?.market_data.price_change_percentage_30d_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_30d_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_30d_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_30d_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_30d_in_currency.usd ? `${coinData?.market_data.price_change_percentage_30d_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
 
-          <PriceChangeTableBodyCell
-            align="center"
-            sx={{
-              borderRight: "0px transparent",
-              color: coinData?.market_data.price_change_percentage_1y_in_currency.usd && coinData?.market_data.price_change_percentage_1y_in_currency.usd > 0 ? "green" : "red",
-            }}
-          >
-            {coinData?.market_data.price_change_percentage_1y_in_currency.usd !== null ? `${coinData?.market_data.price_change_percentage_1y_in_currency.usd.toFixed(2)}%` : "-"}
-          </PriceChangeTableBodyCell>
+            <PriceChangeTableBodyCell
+              align="center"
+              sx={{
+                borderRight: "0px transparent",
+                color: utils.getCryptoPercentageColor(coinData?.market_data.price_change_percentage_1y_in_currency.usd),
+              }}
+            >
+              {coinData?.market_data.price_change_percentage_1y_in_currency.usd ? `${coinData?.market_data.price_change_percentage_1y_in_currency.usd.toFixed(2)}%` : "-"}
+            </PriceChangeTableBodyCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
