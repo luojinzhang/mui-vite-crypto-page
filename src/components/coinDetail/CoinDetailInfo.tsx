@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-interface CoinInfoProps {
+interface CoinDetailInfoProps {
   market_data: CryptoModel.Coin["market_data"];
 }
 
-export default function CoinInfo({ market_data }: CoinInfoProps) {
+export default function CoinDetailInfo({ market_data }: CoinDetailInfoProps) {
   return (
     <>
       <Typography variant="body1">
