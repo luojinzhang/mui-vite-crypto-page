@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
-import { PaginationProvider } from "..";
-import { store } from "../../redux/store";
+import { PaginationProvider } from "../components";
+import { store } from "../redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
@@ -23,7 +23,7 @@ export default function ApplicationWrapper({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
       <Provider store={store}>
         <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <PaginationProvider>

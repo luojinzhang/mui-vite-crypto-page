@@ -1,10 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useLazyGetCoinDataByIdQuery, useLazyGetCoinHistoricalChartDataByIdQuery } from "../redux/rtkQuery/coinGeckoApi";
-import { Avatar, Box, Grid2, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Avatar, Box, Grid2, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 import { utils } from "../utils";
-import { useLoading } from ".";
+import { CoinInfo } from ".";
+import { useLoading } from "../hoc";
 
 export default function CoinDetailPage() {
   const { setIsLoading } = useLoading();
@@ -86,6 +87,7 @@ export default function CoinDetailPage() {
         <Paper sx={{ padding: "1rem", marginBottom: "2rem" }}>
           <Grid2 container spacing="1rem">
             <Box display="flex" sx={{ flexDirection: { xs: "row", sm: "column" } }} alignItems="center" gap="0.2rem">
+              {/* Coin avatar, name, rank */}
               <Avatar
                 src={coinData.image.large}
                 alt={coinData.name}
@@ -114,76 +116,42 @@ export default function CoinDetailPage() {
               </Box>
             </Box>
 
+            {/* Coin info */}
             <Box display="flex" flexDirection="column" gap="0.2rem">
-              <Typography variant="body1">
-                <strong>Current Price:</strong> {`$${coinData.market_data.current_price.usd}`}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Market Cap:</strong> {`$${coinData.market_data.market_cap.usd.toLocaleString()}`}
-              </Typography>
-              <Typography variant="body1">
-                <strong>24h Change:</strong> {coinData.market_data.price_change_percentage_24h !== null ? `${coinData.market_data.price_change_percentage_24h.toFixed(2)}%` : "-"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Fully Diluted Valuation:</strong> {coinData.market_data.fully_diluted_valuation.usd !== null ? `$${coinData.market_data.fully_diluted_valuation.usd.toLocaleString()}` : "-"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Total Trading Vol:</strong> {coinData.market_data.total_volume.usd !== null ? `$${coinData.market_data.total_volume.usd.toLocaleString()}` : "-"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Circulating Supply:</strong> {coinData.market_data.circulating_supply !== null ? coinData.market_data.circulating_supply.toLocaleString() : "-"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Total Supply:</strong> {coinData.market_data.total_supply !== null ? coinData.market_data.total_supply.toLocaleString() : "-"}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Max Supply:</strong> {coinData.market_data.max_supply !== null ? coinData.market_data.max_supply.toLocaleString() : "-"}
-              </Typography>
+              <CoinInfo market_data={coinData.market_data} />
             </Box>
           </Grid2>
 
           <Grid2 container pt="1rem" width="100%">
-            <Grid2
+            <Stack
               gap="1rem"
-              display="flex"
               sx={{
+                width: "100%",
+                justifyContent: "space-between",
                 flexDirection: {
                   xs: "column", // column direction for small screens
                   sm: "row", // row direction for larger screens
                 },
+                padding: "1rem 1rem 0rem 1rem",
               }}
             >
-              <ToggleButtonGroup value={selectedMetric} exclusive onChange={handleChartMetricChange}>
-                <ToggleButton value="prices" aria-label="price">
-                  Price
-                </ToggleButton>
-                <ToggleButton value="market_caps" aria-label="market_cap">
-                  Market Cap
-                </ToggleButton>
-                <ToggleButton value="total_volumes" aria-label="volume">
-                  Volume
-                </ToggleButton>
+              <ToggleButtonGroup value={selectedMetric} exclusive onChange={handleChartMetricChange} color="primary">
+                <ToggleButton value="prices">Price</ToggleButton>
+                <ToggleButton value="market_caps">Market Cap</ToggleButton>
+                <ToggleButton value="total_volumes">Volume</ToggleButton>
               </ToggleButtonGroup>
 
-              <ToggleButtonGroup value={selectedTimeRange} exclusive onChange={handleChartTimeRangeChange}>
-                <ToggleButton value="1" aria-label="price">
-                  24H
-                </ToggleButton>
-                <ToggleButton value="30" aria-label="market_cap">
-                  1M
-                </ToggleButton>
-                <ToggleButton value="90" aria-label="volume">
-                  3M
-                </ToggleButton>
-                <ToggleButton value="365" aria-label="volume">
-                  1Y
-                </ToggleButton>
+              <ToggleButtonGroup value={selectedTimeRange} exclusive onChange={handleChartTimeRangeChange} color="primary">
+                <ToggleButton value="1">24H</ToggleButton>
+                <ToggleButton value="30">1M</ToggleButton>
+                <ToggleButton value="90">3M</ToggleButton>
+                <ToggleButton value="365">1Y</ToggleButton>
               </ToggleButtonGroup>
-            </Grid2>
+            </Stack>
 
             <Box sx={{ width: "100%", height: "30rem", marginTop: "1rem", p: "0" }}>
               <LineChart
-                sx={{ p: "1rem" }}
+                sx={{ pl: "1rem" }}
                 xAxis={[
                   {
                     data: coinHistoricalChart[selectedMetric].map((x) => x[0]),

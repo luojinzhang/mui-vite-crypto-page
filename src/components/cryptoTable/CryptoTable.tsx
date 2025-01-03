@@ -51,7 +51,7 @@ export default function CryptoTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="cryptocurrency table">
+      <Table sx={{ minWidth: "40rem" }}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, Toolbar } from "@mui/material";
+import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import { clLogo } from "../../assets";
@@ -10,7 +10,7 @@ export default function NavigationBar() {
         <Avatar src={clLogo} sx={{ borderRadius: 0, width: "2.5rem", height: "2.5rem" }} />
 
         <Button color="inherit" component={Link} to="/">
-          Home
+          <Typography variant="h6">Home</Typography>
         </Button>
       </Toolbar>
     </AppBar>

@@ -20,6 +20,9 @@ const theme = createTheme({
     text: {
       primary: "black",
     },
+    background: {
+      default: "#ddd",
+    },
   },
 });
 
