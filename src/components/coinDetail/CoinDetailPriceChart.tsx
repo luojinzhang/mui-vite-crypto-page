@@ -14,7 +14,6 @@ export default function CoinDetailPriceChart({ coinHistoricalChart, selectedMetr
   return (
     <Box sx={{ width: "100%", height: "25rem", marginTop: "1rem", p: "0" }}>
       <LineChart
-        sx={{ pl: "1rem" }}
         xAxis={[
           {
             data: coinHistoricalChart[selectedMetric].map((x) => x[0]),
@@ -27,6 +26,7 @@ export default function CoinDetailPriceChart({ coinHistoricalChart, selectedMetr
             data: coinHistoricalChart[selectedMetric].map((x) => x[1]),
             valueFormatter: (value) => utils.getShortNumberNotation(value),
             domainLimit: "nice",
+            disableTicks: true,
           },
         ]}
         series={[
