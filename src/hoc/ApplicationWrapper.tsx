@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
-import { PaginationProvider } from "..";
-import { store } from "../../redux/store";
+import { PaginationProvider } from "../components";
+import { store } from "../redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 

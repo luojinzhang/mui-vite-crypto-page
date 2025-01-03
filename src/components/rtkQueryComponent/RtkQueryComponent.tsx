@@ -1,11 +1,11 @@
 import React from "react";
 import { useGetCoinsListQuery, useLazyGetCoinsListWithMarketDataQuery } from "../../redux/rtkQuery/coinGeckoApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { coinsClientSliceActions } from "../../redux/coins/coinsClientSlice";
-import { useLoading, usePagination } from "..";
-import { useSelector } from "react-redux";
+import { usePagination } from "..";
 import { RootState } from "../../redux/store";
 import { utils } from "../../utils";
+import { useLoading } from "../../hoc";
 
 export default function RtkQueryComponent() {
   const { currentPage, rowsPerPage, setTotalPages } = usePagination();

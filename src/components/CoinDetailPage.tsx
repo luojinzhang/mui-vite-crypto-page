@@ -4,7 +4,8 @@ import { useLazyGetCoinDataByIdQuery, useLazyGetCoinHistoricalChartDataByIdQuery
 import { Avatar, Box, Grid2, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 import { utils } from "../utils";
-import { CoinInfo, useLoading } from ".";
+import { CoinInfo } from ".";
+import { useLoading } from "../hoc";
 
 export default function CoinDetailPage() {
   const { setIsLoading } = useLoading();

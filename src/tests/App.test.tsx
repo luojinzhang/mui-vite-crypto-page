@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import App from "../App";
-import { ApplicationWrapper } from "../components";
+import { ApplicationWrapper } from "../hoc";
 
 vi.stubGlobal("scrollTo", vi.fn());
 
@@ -25,7 +25,7 @@ describe("Ensure the App component renders without crashing", () => {
     fireEvent.click(bitcoinRow!);
 
     expect(await screen.findByText("BTC"));
-    expect(await screen.findByText("Current Price"));
+    expect(await screen.findByText("Current Price:"));
     expect(await screen.findByText("Max Supply:"));
   });
 });

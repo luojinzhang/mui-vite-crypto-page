@@ -1,6 +1,6 @@
 import React from "react";
 import { CryptoTable } from ".";
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function CoinListPage() {
   return (
