@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { clLogo } from "../../assets";
 import { usePagination } from "../cryptoContext/PaginationProvider";
 import { DEFAULT_RESULT_PER_PAGE } from "../../constants";
+import { SearchBar } from "..";
 
 export default function NavigationBar() {
   const { setCurrentPage, setRowsPerPage } = usePagination();
@@ -20,6 +21,9 @@ export default function NavigationBar() {
         <Button color="inherit" component={Link} to="/" onClick={handleClickHome}>
           <Typography variant="h6">Home</Typography>
         </Button>
+
+        {/* Search bar */}
+        <SearchBar />
       </Toolbar>
     </AppBar>
   );
