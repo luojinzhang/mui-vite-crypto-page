@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="175" viewBox="0 0 200 175">
+    <g transform="matrix(1,0,0,1,0,0)">
+        <rect width="200" height="175" fill="#000000" />
+        <rect x="5" y="5" width="190" height="165" fill="#ffffff" />
+        <rect x="10" y="10" width="180" height="155" fill="#000000" />
+        <text x="50%" y="100" font-family="Arial, sans-serif" font-size="120" font-weight="bold"
+            fill="#ffffff" text-anchor="middle" dominant-baseline="middle">CL</text>
+    </g>
+</svg>
