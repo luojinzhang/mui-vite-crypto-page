@@ -3,6 +3,7 @@ import { ConsistentHeightTableCell, SelectableTableRow, StickyTableCell } from "
 import { Avatar, Box, Stack } from "@mui/material";
 import { SparkLineChart } from "@mui/x-charts";
 import { formatCurrency } from "@coingecko/cryptoformat";
+import { utils } from "../../utils";
 
 interface TableRowComponentProps {
   coin: CryptoModel.CryptoCoinMarket;
@@ -32,21 +33,21 @@ export default function TableRowComponent({ coin, onRowClick }: TableRowComponen
 
       {/* 1H */}
       {(coin.price_change_percentage_1h_in_currency !== null && (
-        <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_1h_in_currency < 0 ? "red" : "green" }}>
+        <ConsistentHeightTableCell align="right" style={{ color: utils.getCryptoPercentageColor(coin.price_change_percentage_1h_in_currency) }}>
           {coin.price_change_percentage_1h_in_currency.toFixed(2)}%
         </ConsistentHeightTableCell>
       )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
 
       {/* 24H */}
       {(coin.price_change_percentage_24h_in_currency !== null && (
-        <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_24h_in_currency < 0 ? "red" : "green" }}>
+        <ConsistentHeightTableCell align="right" style={{ color: utils.getCryptoPercentageColor(coin.price_change_percentage_24h_in_currency) }}>
           {coin.price_change_percentage_24h_in_currency.toFixed(2)}%
         </ConsistentHeightTableCell>
       )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
 
       {/* 7D */}
       {(coin.price_change_percentage_7d_in_currency !== null && (
-        <ConsistentHeightTableCell align="right" style={{ color: coin.price_change_percentage_7d_in_currency < 0 ? "red" : "green" }}>
+        <ConsistentHeightTableCell align="right" style={{ color: utils.getCryptoPercentageColor(coin.price_change_percentage_7d_in_currency) }}>
           {coin.price_change_percentage_7d_in_currency.toFixed(2)}%
         </ConsistentHeightTableCell>
       )) || <ConsistentHeightTableCell align="right">-</ConsistentHeightTableCell>}
