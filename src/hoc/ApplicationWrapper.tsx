@@ -4,6 +4,7 @@ import { PaginationProvider } from "../components";
 import { store } from "../redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
+import { Z_INDEX } from "../constants";
 
 // Create the context object
 const LoadingContext = React.createContext<CryptoModel.LoadingContext>({
@@ -42,6 +43,7 @@ export default function ApplicationWrapper({ children }: PropsWithChildren) {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  zIndex: Z_INDEX.LOADING,
                 }}
               >
                 <CircularProgress />

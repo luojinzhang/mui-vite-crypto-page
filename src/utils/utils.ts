@@ -90,3 +90,47 @@ export const getShortNumberNotation = (value: number) => {
 export const notify = (content: string, type: ToastOptions["type"]) => {
   return toast<string>(content, { type });
 };
+
+/**
+ * Return sorted coins by orderBy and order
+ */
+export const sortCoins = (coins: CryptoModel.CryptoCoinMarket[], orderBy: keyof CryptoModel.CryptoCoinMarket, order: "asc" | "desc"): CryptoModel.CryptoCoinMarket[] => {
+  if (orderBy === null) {
+    return coins;
+  }
+
+  const copy = JSON.parse(JSON.stringify(coins)) as CryptoModel.CryptoCoinMarket[];
+
+  const comparator = (a: CryptoModel.CryptoCoinMarket, b: CryptoModel.CryptoCoinMarket) => {
+    if (a[orderBy] === null || a[orderBy] === undefined || b[orderBy] === null || b[orderBy] === undefined) {
+      return 0;
+    }
+
+    let first = 1;
+    let second = -1;
+    if (order === "desc") {
+      first = -1;
+      second = 1;
+    }
+
+    switch (orderBy) {
+      case "market_cap_rank":
+      case "current_price":
+      case "price_change_percentage_1h_in_currency":
+      case "price_change_percentage_24h_in_currency":
+      case "price_change_percentage_7d_in_currency":
+      case "market_cap":
+        return a[orderBy] > b[orderBy] ? first : second;
+
+      case "name":
+        return a[orderBy].toLowerCase() > b[orderBy].toLowerCase() ? first : second;
+
+      default:
+        break;
+    }
+
+    return 0;
+  };
+
+  return copy.sort(comparator);
+};
