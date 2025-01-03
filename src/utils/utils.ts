@@ -69,11 +69,11 @@ export const getShortenTime = (value: number) => {
 export const getShortNumberNotation = (value: number) => {
   // Check if the value is greater than or equal to a million
   if (value >= 1000000) {
-    return numeral(value).format("0.00a").toLocaleString(); // Format as millions, billions
+    return numeral(value).format("0.0a").toLocaleString(); // Format as millions, billions
   }
 
   // If the value is very small, format it in scientific notation
-  if (value < 0.0001) {
+  if (value > 0 && value < 0.0001) {
     return numeral(value).format("0.0e+0").toLocaleString();
   }
 
