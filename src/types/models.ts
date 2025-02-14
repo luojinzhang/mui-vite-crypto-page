@@ -59,6 +59,7 @@ namespace CryptoModel {
   export type CryptoCoinClientReducerState = {
     coinsIdMap: CryptoCoinIDMap[];
     coinsListMarket: CryptoCoinMarket[];
+    pinnedCoinList: CryptoCoinMarket[];
   };
 
   export type PaginationContext = {
