@@ -3,7 +3,12 @@ import { ConsistentHeightTableCell, SelectableTableRow, StickyTableCell } from "
 import { Avatar, Box, Stack } from "@mui/material";
 import { SparkLineChart } from "@mui/x-charts";
 import { formatCurrency } from "@coingecko/cryptoformat";
+import PushPinIcon from '@mui/icons-material/PushPin';
 import { utils } from "../../utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { coinsClientSliceActions } from "../../redux/coins/coinsClientSlice";
+import { useDispatch } from "react-redux";
 
 interface TableRowComponentProps {
   coin: CryptoModel.CryptoCoinMarket;
@@ -11,6 +16,24 @@ interface TableRowComponentProps {
 }
 
 export default function TableRowComponent({ coin, onRowClick }: TableRowComponentProps) {
+  const pinnedCoinList = useSelector((x: RootState) => x.coinsClientSlice.pinnedCoinList)
+
+  const { addPinnedCoin } = coinsClientSliceActions
+
+  const dispatch = useDispatch();
+
+  const isPinned = React.useMemo(() => {
+    return pinnedCoinList.findIndex(x => x.id === coin.id) > -1
+  }, [pinnedCoinList])
+
+  const handleClickPin = React.useCallback<React.MouseEventHandler<SVGSVGElement>>((evt) => {
+    evt.stopPropagation();
+
+    if (!isPinned) {
+      dispatch(addPinnedCoin(coin))
+    }
+  }, [isPinned])
+
   return (
     <SelectableTableRow key={coin.id} onClick={onRowClick(coin.id)}>
       {/* Market cap rank */}
@@ -21,6 +44,12 @@ export default function TableRowComponent({ coin, onRowClick }: TableRowComponen
       {/* Name */}
       <StickyTableCell sx={{ left: 70 }}>
         <Stack direction="row" alignItems="center">
+          {/* Pin icon */}
+          <PushPinIcon sx={{
+            color: isPinned ? '#ffd480' : '#00004d',
+          }
+          } onClick={handleClickPin} />
+
           <Avatar src={coin.image} alt={coin.name} sx={{ mr: "0.5rem" }} />
           {coin.name}
         </Stack>
